@@ -66,3 +66,12 @@ export const createAnnotation = (maker) => {
   }
   return annotation
 }
+
+export const getObservableMaker = (target: any) => {
+  if (target[MakeObservableSymbol]) {
+    if (!target[MakeObservableSymbol][MakeObservableSymbol]) {
+      return target[MakeObservableSymbol]
+    }
+    return getObservableMaker(target[MakeObservableSymbol])
+  }
+}
