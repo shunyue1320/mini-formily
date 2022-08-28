@@ -3,7 +3,7 @@ import { MakeObservableSymbol } from './environment'
 import { createObservable } from './internals'
 
 export function observable<T extends object>(target: T): T {
-  return createObservable()
+  return createObservable(null, null, target)
 }
 
 // 浅层响应式
