@@ -1,28 +1,31 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { createRoot } from 'react-dom/client'
 
-// import { observable, autorun } from '@formily/reactive'
-// import { observer } from '@formily/reactive-react'
+// import { createForm } from '@formily/core'
+// import { FormProvider, Field } from '@formily/react'
+// import { FormItem, Input } from '@formily/antd'
 
-import { observable, autorun } from '../packages/reactive'
-import { observer } from '../packages/reactive-react'
+import { createForm } from '../packages/core'
+import { FormProvider, Field } from '../packages/react'
+import { FormItem, Input } from '../packages/antd'
 
-const values = { name:'小明', age: 18 }
-const observableValues = observable(values)
+import 'antd/dist/antd.css'
 
-autorun(() => {
-  console.log("[reactive autorun] observableValues.age =", observableValues.age)
-})
+const App = () => {
+  const form = useMemo(() => createForm(), [])
 
-
-const Counter = observer(() => {
-  console.log("[reactive-react observer] observableValues.age =", observableValues.age)
   return (
-    <div>
-      <p>{observableValues.age}</p>
-      <button onClick={() => observableValues.age++}>+</button>
-    </div>
+    <FormProvider form={form}>
+      <Field
+        name="name"
+        title="用户名"
+        value="小明"
+        decorator={[FormItem]}
+        component={[Input]}
+      />
+      <button onClick={() => {form.submit(console.log)}}>提交</button>
+    </FormProvider>
   )
-})
+}
 
-createRoot(document.getElementById('root')).render(<Counter />);
+createRoot(document.getElementById('root')).render(<App />);
