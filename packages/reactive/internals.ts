@@ -1,5 +1,5 @@
-import { ProxyRaw, RawProxy, RawShallowProxy } from "./environment"
-import { isNormalType } from "./checkers"
+import { ProxyRaw, RawProxy, RawShallowProxy, MakeObservableSymbol } from "./environment"
+import { isFn, isNormalType } from "./checkers"
 import { baseHandlers } from "./handlers"
 import { PropertyKey } from "./types"
 
@@ -56,4 +56,13 @@ const createNormalProxy = (target: any, shallow?: boolean) => {
   }
 
   return proxy
+}
+
+
+export const createAnnotation = (maker) => {
+  const annotation = () => { }
+  if (isFn(maker)) {
+    annotation[MakeObservableSymbol] = maker
+  }
+  return annotation
 }
