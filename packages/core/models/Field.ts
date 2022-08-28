@@ -7,7 +7,7 @@ export class Field {
     this.form = form
     this.locate(address)
     this.initialize()
-    this.MakeObservable()
+    this.makeObservable()
   }
   initialize() {
     this.value = this.props.value
